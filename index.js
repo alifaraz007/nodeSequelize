@@ -17,7 +17,14 @@ db.authenticate()
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use('/api', require('./route/user'));
+
+//initialize route
+app.use('/user', require('./route/user'));
+
+//error handler middleware
+app.use((err, req, res, next) => {
+    res.status(422).json(err);
+})
 
 
 //listening to port

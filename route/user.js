@@ -4,7 +4,7 @@ const User = require('../models/usermodel');
 const { check, validationResult } = require("express-validator/check");
 const md5 = require('md5')
 
-router.get('/register', [
+router.post('/register', [
     check('name', 'name is required').not().isEmpty(),
     check('userName', 'userName is required').not().isEmpty(),
     check('email', 'email is required').not().isEmpty(),
@@ -35,10 +35,26 @@ router.get('/register', [
                 }
             }
         } else {
-            res.json('password is not matched');
+            res.status(400).json('password is not matched');
         }
     }
 })
 
+router.post('/login', [
+    check('userName', 'username is reguired').not().isEmpty(),
+    check('password', 'password is reguired').not().isEmpty()
+], async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.status(400).json(errors.array());
+    } else {
+        const result = await User.findOne({where: {userName: req.body.userName}})
+        if(result.password == md5(req.body.password)){
+            res.json(result.id);
+        }else{
+            res.status(500).json('password or username is not correct')
+        }
+    }
+})
 
 module.exports = router;
