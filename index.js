@@ -7,9 +7,9 @@ const app = express();
 
 
 //checking for db connection
-db.authenticate()
+db.sequelize.authenticate()
     .then(() => {
-        console.log('connection has been made');
+        console.log('database connection has been made');
     }).catch(err => {
         console.log('something went wrong', err);
     })
