@@ -1,6 +1,6 @@
 const md5 = require('md5');
 
-const create = (body) => {
+const create = (model, body, res) => {
     return new Promise((resolve, reject) => {
         if (!body.name && !body.userName && !body.email && !body.password && !body.confirm_password) {
             reject(new Error('All fields are required'))

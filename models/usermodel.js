@@ -23,7 +23,11 @@ module.exports = function (db, Sequelize) {
                                 } else {
                                     this.findOne({ where: { userName: user.userName } })
                                         .then((username) => {
-                                            reject(new Error('username already existed'))
+                                            if (username) {
+                                                reject(new Error('username already existed'))
+                                            } else {
+                                                resolve();
+                                            }
                                         })
                                 }
                             })
