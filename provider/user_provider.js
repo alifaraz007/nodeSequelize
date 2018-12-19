@@ -1,24 +1,22 @@
 const md5 = require('md5');
 
-const create = (model, body, res) => {
-    return new Promise((resolve, reject) => {
+const create = (body, res) => {
         if (!body.name && !body.userName && !body.email && !body.password && !body.confirm_password) {
-            reject(new Error('All fields are required'))
+            (res.status(400).json('All fields are required'))
         } else if (!body.name) {
-            reject(new Error('name is required'))
+            (res.status(400).json('name is required'))
         } else if (!body.userName) {
-            reject(new Error('username is required'))
+            (res.status(400).json('username is required'))
         } else if (!body.email) {
-            reject(new Error('email is required'))
+            (res.status(400).json('email is required'))
         } else if (!body.password) {
-            reject(new Error('password is required'))
+            (res.status(400).json('password is required'))
         } else if (!body.confirm_password) {
-            reject(new Error('confirm password is required'))
+            (res.status(400).json('confirm password is required'))
         } else {
             let password = md5(body.password);
-            resolve(...body, ...{ password });
+            return(Object.assign(body, {password}))
         }
-    })
 }
 
 module.exports = { create }

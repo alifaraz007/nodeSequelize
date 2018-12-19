@@ -1,13 +1,15 @@
 const userProvider = require('../provider/user_provider');
-const baseController = require('./base_controller');
+const db = require('../config/database')
 
-class UserController extends baseController {
-    async create(req, res) {
-        const user = await userProvider.create(this._db.User, req.body, res)
-        const result = await this._db.User.create(user)
-        res.json('created')
+
+module.exports = async (req, res) => {
+    const user = await userProvider.create(req.body, res)
+    if (user) {
+        await db.User.create(user)
+        res.json('created');
+
+    } else {
+        console.log('*************')
     }
-}
 
-const controller = new UserController();
-module.exports = controller
+}

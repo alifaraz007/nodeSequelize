@@ -5,7 +5,7 @@ const { check, validationResult } = require("express-validator/check");
 const md5 = require('md5')
 const userController = require('../controller/user_controller')
 
-router.post('/register', userController.create);
+router.post('/register', userController);
 
 
 module.exports = router;
