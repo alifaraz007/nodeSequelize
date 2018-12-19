@@ -25,9 +25,9 @@ const login = async (req, res) => {
     }
 }
 
-//controller for get
+//controller to get user data
 const get = async (req, res) => {
-    const user = await db.User.findOne({where: {id: req.data.token}})
+    const user = await db.User.findOne({ where: { id: req.data.token } })
     res.json(user);
 }
 
