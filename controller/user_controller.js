@@ -20,12 +20,19 @@ const login = async (req, res) => {
             res.json('wrong email or password');
         } else {
             let token = jwt.sign({ token: result.id }, 'secret_key', { expiresIn: 60 * 60 })
-            res.json({ status: 1, token: token, })
+            res.header('x-auth-token', token).json({ status: 1, token: token, })
         }
     }
 }
 
+//controller for get
+const get = async (req, res) => {
+    const user = await db.User.findOne({where: {id: req.data.token}})
+    res.json(user);
+}
+
 module.exports = {
     register,
-    login
+    login,
+    get
 }
