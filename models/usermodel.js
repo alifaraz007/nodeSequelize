@@ -15,7 +15,7 @@ module.exports = function (db, Sequelize) {
     }, {
             hooks: {
                 beforeCreate: function (user, option) {
-                    return Promise((resolve, reject) => {
+                    return new Promise((resolve, reject) => {
                         this.findOne({ where: { email: user.email } })
                             .then((email) => {
                                 if (email) {

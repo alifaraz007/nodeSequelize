@@ -10,13 +10,13 @@ const sequelize = new Sequelize('myDb', 'root', '123', {
     operatorsAliases: Op
 });
 
-Object.keys(models).forEach((modelName)=>{
+Object.keys(models).forEach((modelName) => {
     const model = models[modelName](sequelize, Sequelize);
     db[modelName] = model;
     console.log(`loading model ${modelName}`);
 })
 
-module.exports =  Object.assign({}, db, {
+module.exports = Object.assign({}, db, {
     sequelize,
     Sequelize
 })

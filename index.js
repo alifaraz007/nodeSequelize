@@ -7,12 +7,14 @@ const app = express();
 
 
 //checking for db connection
-db.sequelize.authenticate()
-    .then(() => {
+(async () => {
+    try {
+        const result = await db.sequelize.authenticate()
         console.log('database connection has been made');
-    }).catch(err => {
-        console.log('something went wrong', err);
-    })
+    } catch (err) {
+        console.log(err);
+    }
+})();
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
