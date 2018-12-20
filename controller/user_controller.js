@@ -2,6 +2,7 @@ const userProvider = require('../provider/user_provider');
 const db = require('../config/database')
 const jwt = require('jsonwebtoken')
 
+//controller for register
 const register = async (req, res, next) => {
     try {
         const user = await userProvider.create(req, res)
@@ -12,6 +13,8 @@ const register = async (req, res, next) => {
     }
 }
 
+
+//controller for login
 const login = async (req, res) => {
     try {
         const user = await userProvider.login(req, res)
@@ -29,7 +32,14 @@ const login = async (req, res) => {
     }
 }
 
+//controller to get user data
+const get = async (req, res) => {
+    const user = await db.User.findOne({ where: { id: req.data.token } })
+    res.json(user);
+}
+
 module.exports = {
     register,
-    login
+    login,
+    get
 }
