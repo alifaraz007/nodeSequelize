@@ -18,11 +18,11 @@ module.exports = function (db, Sequelize) {
                     return new Promise(async (resolve, reject) => {
                         const email = await this.findOne({ where: { email: user.email } })
                         if (email) {
-                            reject(new Error('email already existed'))
+                            reject('email already existed')
                         } else {
                             const username = await this.findOne({ where: { userName: user.userName } })
                             if (username) {
-                                reject(new Error('username already existed'))
+                                reject('username already existed')
                             } else {
                                 resolve();
                             }
