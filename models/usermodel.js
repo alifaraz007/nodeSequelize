@@ -15,22 +15,18 @@ module.exports = function (db, Sequelize) {
     }, {
             hooks: {
                 beforeCreate: function (user, option) {
-                    return new Promise((resolve, reject) => {
-                        this.findOne({ where: { email: user.email } })
-                            .then((email) => {
-                                if (email) {
-                                    reject(new Error('email already existed'))
-                                } else {
-                                    this.findOne({ where: { userName: user.userName } })
-                                        .then((username) => {
-                                            if (username) {
-                                                reject(new Error('username already existed'))
-                                            } else {
-                                                resolve();
-                                            }
-                                        })
-                                }
-                            })
+                    return new Promise(async (resolve, reject) => {
+                        const email = await this.findOne({ where: { email: user.email } })
+                        if (email) {
+                            reject('email already existed')
+                        } else {
+                            const username = await this.findOne({ where: { userName: user.userName } })
+                            if (username) {
+                                reject('username already existed')
+                            } else {
+                                resolve();
+                            }
+                        }
                     })
                 }
             },

@@ -1,10 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const db = require('./config/database')
-
+const db = require('./config/database');
+const validator = require('express-validator')
 
 const app = express();
-
 
 //checking for db connection
 (async () => {
@@ -16,9 +15,11 @@ const app = express();
     }
 })();
 
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+//using express-validator
+app.use(validator())
 
 //initialize route
 app.use('/user', require('./route/user'));
