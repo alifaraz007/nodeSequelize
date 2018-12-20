@@ -14,7 +14,7 @@ const register = async (req, res, next) => {
 
 const login = async (req, res) => {
     try {
-        const user = await userProvider.log(req, res)
+        const user = await userProvider.login(req, res)
         const result = await db.User.findOne({
             where: { email: user.email, password: user.password }
         })

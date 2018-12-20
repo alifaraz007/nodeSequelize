@@ -23,7 +23,7 @@ const create = (req, res, next) => {
 }
 
 //provider for login
-const log = (req, res) => {
+const login = (req, res) => {
     return new Promise((resolve, reject) => {
         req.checkBody('password', 'password is required.').notEmpty()
         req.checkBody('email', 'email is required.').notEmpty()
@@ -41,5 +41,5 @@ const log = (req, res) => {
 
 module.exports = {
     create,
-    log
+    login
 }
