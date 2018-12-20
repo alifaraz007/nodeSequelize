@@ -4,13 +4,15 @@ const validation = (req, res, next) => {
     const token = req.header('x-auth-token')
     if (token) {
         jwt.verify(token, 'secret_key', (err, doc) => {
-            if(err){
+            if (err) {
                 res.status(400).json('not authorized');
-            }else{
+            } else {
                 req['data'] = doc
                 next();
             }
         })
+    } else {
+        res.status(400).json('token is required')
     }
 }
 

@@ -2,26 +2,33 @@ const userProvider = require('../provider/user_provider');
 const db = require('../config/database')
 const jwt = require('jsonwebtoken')
 
-//controller for registration
-const register = async (req, res) => {
-    const user = await userProvider.create(req.body, res)
-    if (user) {
-        await db.User.create(user)
-        return res.json('new data inserted');
+//controller for register
+const register = async (req, res, next) => {
+    try {
+        const user = await userProvider.create(req, res)
+        const result = await db.User.create(user)
+        res.json(result);
+    } catch (err) {
+        res.status(400).json(err);
     }
 }
 
+
 //controller for login
 const login = async (req, res) => {
-    const user = await userProvider.log(req.body, res)
-    if (user) {
-        const result = await db.User.findOne({ where: { email: user.email, password: user.password } })
+    try {
+        const user = await userProvider.login(req, res)
+        const result = await db.User.findOne({
+            where: { email: user.email, password: user.password }
+        })
         if (!result) {
-            res.json('wrong email or password');
+            res.json('entered wrong email or password');
         } else {
             let token = jwt.sign({ token: result.id }, 'secret_key', { expiresIn: 60 * 60 })
-            res.header('x-auth-token', token).json({ status: 1, token: token, })
+            res.json({ status: 1, token: token, })
         }
+    } catch (err) {
+        res.status(400).json(err);
     }
 }
 
