@@ -12,4 +12,7 @@ router.post('/login', userController.login);
 //route to get user data
 router.get('/get', uservalidation, userController.get)
 
+//route to delete user data
+router.put('/delete', uservalidation, userController.remove)
+
 module.exports = router;

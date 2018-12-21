@@ -13,7 +13,6 @@ const register = async (req, res, next) => {
     }
 }
 
-
 //controller for login
 const login = async (req, res) => {
     try {
@@ -38,8 +37,15 @@ const get = async (req, res) => {
     res.json(user);
 }
 
+//controller for delete user data
+const remove = async (req, res) => {
+    const deleteUser = await db.User.destroy({ where: { id: req.data.token } })
+    res.json('user data deleted');
+}
+
 module.exports = {
     register,
     login,
-    get
+    get,
+    remove
 }
