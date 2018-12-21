@@ -45,10 +45,15 @@ const remove = async (req, res) => {
 
 //controller to return list of users
 const list = async (req, res) => {
-    const pageNum = Number(req.params.page)
-    const count = Number(req.params.count)
-    const userlist = await db.User.findAll({ limit: count, offset: (pageNum * count) })
-    res.json(userlist)
+    try {
+        const pageNum = Number(req.params.page)
+        const limit = Number(req.params.count)
+        const offset = pageNum * limit
+        const userlist = await db.User.getData(pageNum, limit, offset)
+        res.json(userlist)
+    } catch (err) {
+        res.status(400).json(err)
+    }
 }
 
 module.exports = {

@@ -33,5 +33,21 @@ module.exports = function (db, Sequelize) {
             timestamps: true,
             freezeTableName: true
         });
+    User.getData = function (page, limit, offset) {
+        return new Promise(async (resolve, reject) => {
+            if (page >= 0 && limit > 0) {
+                const data = await this.findAll({ limit, offset })
+                if (data[0] == null) {
+                    reject('data not found')
+                } else {
+                    resolve(data);
+                }
+            } else {
+                reject('invalid data')
+            }
+        })
+    }
     return User;
 }
+
+
