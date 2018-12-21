@@ -15,4 +15,7 @@ router.get('/get', uservalidation, userController.get)
 //route to delete user data
 router.put('/delete', uservalidation, userController.remove)
 
+//route to return list of users
+router.get('/list/:page/:count', userController.list)
+
 module.exports = router;

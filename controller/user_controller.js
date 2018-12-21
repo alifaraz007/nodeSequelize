@@ -43,9 +43,18 @@ const remove = async (req, res) => {
     res.json('user data deleted');
 }
 
+//controller to return list of users
+const list = async (req, res) => {
+    const pageNum = Number(req.params.page)
+    const count = Number(req.params.count)
+    const userlist = await db.User.findAll({ limit: count, offset: (pageNum * count) })
+    res.json(userlist)
+}
+
 module.exports = {
     register,
     login,
     get,
-    remove
+    remove,
+    list
 }
