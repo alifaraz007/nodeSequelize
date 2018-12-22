@@ -13,7 +13,6 @@ const register = async (req, res, next) => {
     }
 }
 
-
 //controller for login
 const login = async (req, res) => {
     try {
@@ -38,8 +37,29 @@ const get = async (req, res) => {
     res.json(user);
 }
 
+//controller for delete user data
+const remove = async (req, res) => {
+    const deleteUser = await db.User.destroy({ where: { id: req.data.token } })
+    res.json('user data deleted');
+}
+
+//controller to return list of users
+const list = async (req, res) => {
+    try {
+        const pageNum = Number(req.params.page)
+        const limit = Number(req.params.count)
+        const offset = pageNum * limit
+        const userlist = await db.User.getData(pageNum, limit, offset)
+        res.json(userlist)
+    } catch (err) {
+        res.status(400).json(err)
+    }
+}
+
 module.exports = {
     register,
     login,
-    get
+    get,
+    remove,
+    list
 }
