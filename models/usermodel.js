@@ -47,6 +47,9 @@ module.exports = function (db, Sequelize) {
             }
         })
     }
+    User.associate = function (models) {
+        User.hasOne(models.Join, { foreignKey: 'user_id' })
+    }
     return User;
 }
 
