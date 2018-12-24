@@ -16,6 +16,14 @@ Object.keys(models).forEach((modelName) => {
     console.log(`loading model ${modelName}`);
 })
 
+Object.keys(db).forEach((modelName) => {
+    if (db[modelName].options.associate) {
+        db[modelName].options.associate(db)
+    }
+})
+
+sequelize.sync()
+
 module.exports = Object.assign({}, db, {
     sequelize,
     Sequelize
