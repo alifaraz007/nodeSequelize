@@ -1,5 +1,5 @@
 module.exports = function (db, Sequelize) {
-    const Join = db.define('join', {
+    const UserDetails = db.define('userDetails', {
         user_id: {
             type: Sequelize.INTEGER,
             references: {
@@ -19,9 +19,9 @@ module.exports = function (db, Sequelize) {
             timestamps: true,
             freezeTableName: true
         })
-    Join.associate = function (models) {
-        Join.belongsTo(models.Profile, { foreignKey: 'profile_id' })
-        Join.belongsTo(models.User, { foreignKey: 'user_id' })
+    UserDetails.associate = function (models) {
+        UserDetails.belongsTo(models.Profile, { foreignKey: 'profile_id' })
+        UserDetails.belongsTo(models.User, { foreignKey: 'user_id' })
     }
-    return Join;
+    return UserDetails;
 }

@@ -9,7 +9,7 @@ module.exports = function (db, Sequelize) {
         }
     )
     Profile.associate = function (models) {
-        Profile.hasOne(models.Join, { foreignKey: 'profile_id' })
+        Profile.hasOne(models.UserDetails, { foreignKey: 'profile_id' })
         Profile.hasOne(models.Address, { foreignKey: 'address_id' })
     }
     return Profile;
