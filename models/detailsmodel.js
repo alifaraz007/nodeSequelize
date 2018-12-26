@@ -19,6 +19,11 @@ module.exports = function (db, Sequelize) {
             timestamps: true,
             freezeTableName: true
         })
+    UserDetails.addprofile = function (userid) {
+        return new Promise(async (resolve, reject) => {
+            this.update({ user_id: userid }, { where: {} })
+        })
+    }
     UserDetails.associate = function (models) {
         UserDetails.belongsTo(models.Profile, { foreignKey: 'profile_id' })
         UserDetails.belongsTo(models.User, { foreignKey: 'user_id' })

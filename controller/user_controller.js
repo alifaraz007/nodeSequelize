@@ -56,10 +56,27 @@ const list = async (req, res) => {
     }
 }
 
+//controller to create user profile
+const profile = async (req, res) => {
+    try {
+        const profileData = await userProvider.add(req, res)
+        const profile = await db.Profile.add(profileData)
+        const userDetails = await db.UserDetails.create({
+            user_id: req.data.token,
+            profile_id: profile.id
+        })
+        res.json(profile)
+    } catch (err) {
+        res.status(400).json(err)
+    }
+}
+
+
 module.exports = {
     register,
     login,
     get,
     remove,
-    list
+    list,
+    profile
 }
