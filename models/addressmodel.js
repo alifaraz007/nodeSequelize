@@ -7,10 +7,9 @@ module.exports = function (db, Sequelize) {
                 key: 'id'
             }
         },
+        address_type: Sequelize.STRING,
         city: Sequelize.STRING,
-        state: Sequelize.STRING,
-        pincode: Sequelize.INTEGER,
-        phone_num: Sequelize.INTEGER
+        state: Sequelize.STRING
     }, {
             timestamps: true,
             freezeTableName: true

@@ -8,15 +8,22 @@ module.exports = function (db, Sequelize) {
             freezeTableName: true
         }
     )
-    //creating user's profile
+    //creating or updating user's profile
     Profile.add = function (profiledata) {
         return new Promise(async (resolve, reject) => {
             const data = await this.findOne()
             if (!data) {
-                const result = await this.create(profiledata)
+                const result = await this.create({
+                    first_name: profiledata.first_name,
+                    last_name: profiledata.last_name
+                })
                 resolve(result)
             } else {
-                reject('profile is already created')
+                const result = await this.update({
+                    first_name: profiledata.first_name,
+                    last_name: profiledata.last_name
+                }, { where: { id: data.id } })
+                resolve(data)
             }
         })
     }

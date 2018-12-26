@@ -18,7 +18,7 @@ router.put('/delete', uservalidation, userController.remove)
 //route to return list of users
 router.get('/list/:page/:count', userController.list)
 
-//route to create user profile
+//route to create or update user profile
 router.post('/profile', uservalidation, userController.profile)
 
 module.exports = router;

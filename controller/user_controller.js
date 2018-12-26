@@ -56,15 +56,34 @@ const list = async (req, res) => {
     }
 }
 
-//controller to create user profile
+//controller to create or update user profile
 const profile = async (req, res) => {
     try {
         const profileData = await userProvider.add(req, res)
         const profile = await db.Profile.add(profileData)
-        const userDetails = await db.UserDetails.create({
-            user_id: req.data.token,
-            profile_id: profile.id
+        const userDetails = await db.UserDetails.findOrCreate({
+            where: {
+                user_id: req.data.token,
+                profile_id: profile.id
+            }
         })
+        // creating or updating address
+        const address = await db.Address.findOne({
+            where: { address_type: profileData.address_type }
+        })
+        if (!address) {
+            const newAddress = await db.Address.create({
+                address_id: profile.id,
+                address_type: profileData.address_type,
+                city: profileData.city,
+                state: profileData.state
+            })
+        } else {
+            const updateAddress = await db.Address.update({
+                city: profileData.city,
+                state: profileData.state
+            }, { where: { address_type: profileData.address_type } })
+        }
         res.json(profile)
     } catch (err) {
         res.status(400).json(err)
