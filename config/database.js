@@ -17,8 +17,8 @@ Object.keys(models).forEach((modelName) => {
 })
 
 Object.keys(db).forEach((modelName) => {
-    if (db[modelName].options.associate) {
-        db[modelName].options.associate(db)
+    if ('associate' in db[modelName]) {
+        db[modelName].associate(db)
     }
 })
 
