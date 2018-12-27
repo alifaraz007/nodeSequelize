@@ -39,7 +39,26 @@ const login = (req, res) => {
     })
 }
 
+//provider for profile
+const add = (req, res) => {
+    return new Promise((resolve, reject) => {
+        req.checkBody('first_name', 'first name is required.').notEmpty()
+        req.checkBody('last_name', 'last name is required.').notEmpty()
+        req.checkBody('address_type', 'address type is required.').notEmpty()
+        req.checkBody('city', 'city is required.').notEmpty()
+        req.checkBody('state', 'state is required.').notEmpty()
+
+        const errors = req.validationErrors()
+        if (errors) {
+            reject(errors)
+        } else {
+            resolve(req.body)
+        }
+    })
+}
+
 module.exports = {
     create,
-    login
+    login,
+    add
 }

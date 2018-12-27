@@ -8,9 +8,28 @@ module.exports = function (db, Sequelize) {
             freezeTableName: true
         }
     )
+    //creating or updating user's profile
+    Profile.add = function (profiledata) {
+        return new Promise(async (resolve, reject) => {
+            const data = await this.findOne()
+            if (!data) {
+                const result = await this.create({
+                    first_name: profiledata.first_name,
+                    last_name: profiledata.last_name
+                })
+                resolve(result)
+            } else {
+                const result = await this.update({
+                    first_name: profiledata.first_name,
+                    last_name: profiledata.last_name
+                }, { where: { id: data.id } })
+                resolve(data)
+            }
+        })
+    }
     Profile.associate = function (models) {
         Profile.hasOne(models.UserDetails, { foreignKey: 'profile_id' })
-        Profile.hasOne(models.Address, { foreignKey: 'address_id' })
+        Profile.hasMany(models.Address, { foreignKey: 'address_id' })
     }
     return Profile;
 }
