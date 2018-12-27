@@ -21,4 +21,7 @@ router.get('/list/:page/:count', userController.list)
 //route to create or update user profile
 router.post('/profile', uservalidation, userController.profile)
 
+//route to get user's all data
+router.get('/getById/:id', uservalidation, userController.getById)
+
 module.exports = router;

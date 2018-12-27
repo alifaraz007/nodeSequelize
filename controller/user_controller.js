@@ -90,6 +90,16 @@ const profile = async (req, res) => {
     }
 }
 
+//controller to get all data of user by id
+const getById = async (req, res) => {
+    try {
+        const data = await db.UserDetails.getDataById(req.params.id)
+        res.json(data)
+    } catch (err) {
+        res.status(400).json(err)
+    }
+}
+
 
 module.exports = {
     register,
@@ -97,5 +107,6 @@ module.exports = {
     get,
     remove,
     list,
-    profile
+    profile,
+    getById
 }
